@@ -19,7 +19,7 @@ export default class App extends Component {
         fetch('https://api.hgbrasil.com/weather?key=fb3e164d&user_ip=remote')
             .then((response) => response.json())
             .then((json) => {
-                this.setState({ today: json.results, forecast: json.forecast })
+                this.setState({ today: json.results, forecast: json.results.forecast })
             })
             .catch((error) => console.error(error))
             .finally(() => {
@@ -38,42 +38,22 @@ export default class App extends Component {
                 </View>
 
                 <View style={Styles.viewForecast}>
-                <Text> Próximos Dias </Text>
-                    <ScrollView
+                    <Text> Próximos Dias </Text>
+                    <FlatList
+                        data={this.state.forecast}
+                        keyExtractor={({ id }, index) => id}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
-                        style={Styles.scrollView}>
+                        renderItem={({ item }) => (
                             <View style={Styles.nextDays} >
-                                <Text style={Styles.textNextDays}>05/04</Text>
-                                <Text style={Styles.textNextDays}>Min. 20º</Text>
-                                <Text style={Styles.textNextDays}>Max. 25º</Text>
-                                <Text style={Styles.textNextDays}>Ensolarado</Text>
+                                <Text style={Styles.textNextDays}>{item.date}</Text>
+                                <Text style={Styles.textNextDays}>{item.weekday}</Text>
+                                <Text style={Styles.textNextDays}>{item.min}</Text>
+                                <Text style={Styles.textNextDays}>{item.max}</Text>
+                                <Text style={Styles.textNextDays}>{item.description}</Text>
                             </View>
-                            <View style={Styles.nextDays} >
-                                <Text style={Styles.textNextDays}>06/04</Text>
-                                <Text style={Styles.textNextDays}>Min. 20º</Text>
-                                <Text style={Styles.textNextDays}>Max. 25º</Text>
-                                <Text style={Styles.textNextDays}>Ensolarado</Text>
-                            </View>
-                            <View style={Styles.nextDays} >
-                                <Text style={Styles.textNextDays}>07/04</Text>
-                                <Text style={Styles.textNextDays}>Min. 20º</Text>
-                                <Text style={Styles.textNextDays}>Max. 25º</Text>
-                                <Text style={Styles.textNextDays}>Ensolarado</Text>
-                            </View>
-                            <View style={Styles.nextDays} >
-                                <Text style={Styles.textNextDays}>08/04</Text>
-                                <Text style={Styles.textNextDays}>Min. 20º</Text>
-                                <Text style={Styles.textNextDays}>Max. 25º</Text>
-                                <Text style={Styles.textNextDays}>Ensolarado</Text>
-                            </View>
-                            <View style={Styles.nextDays} >
-                                <Text style={Styles.textNextDays}>08/04</Text>
-                                <Text style={Styles.textNextDays}>Min. 20º</Text>
-                                <Text style={Styles.textNextDays}>Max. 25º</Text>
-                                <Text style={Styles.textNextDays}>Ensolarado</Text>
-                            </View>
-                    </ScrollView>
+                        )}
+                    />
                 </View>
             </ImageBackground>
         );
