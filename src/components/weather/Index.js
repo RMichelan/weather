@@ -16,7 +16,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        fetch('https://api.hgbrasil.com/weather?key=fb3e164d&user_ip=remote')
+        fetch('https://api.hgbrasil.com/weather?key=[key_hgbrasil]d&user_ip=remote')
             .then((response) => response.json())
             .then((json) => {
                 this.setState({ today: json.results, forecast: json.results.forecast })
